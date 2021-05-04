@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: management-pod
+  namespace: alpha
+spec: 
+  selector: 
+    matchLabels:
+      app: ubuntu
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: ubuntu
+    spec: 
+      containers: 
+      - name: management-pod
+        image: 192.168.121.3/alpha/ubuntu:latest
+        ports: 
+        - name: ssh
+          containerPort: 22
+        env:
+        - name: ROOT_PASS
+          value: VMware1!

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: management-pod
+  namespace: alpha
+spec:
+  selector:
+    matchLabels:
+      app: busybox
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - name: busybox
+        image: 192.168.121.2/alpha/busybox:latest
+        args:
+        - sleep
+        - "3600"        
+        ports: 
+        - name: ssh
+          containerPort: 22
+        env: 
+        - name: ROOT_PASS
+          value: "VMware1!" 
+      restartPolicy: Always

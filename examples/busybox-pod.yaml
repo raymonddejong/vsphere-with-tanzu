@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  namespace: alpha
+spec: 
+  containers: 
+  - name: busybox
+    image: 192.168.121.3/alpha/busybox:latest
+    # image: busybox:latest
+    command: 
+      - sleep
+      - "3600"
+    imagePullPolicy: IfNotPresent
+  restartPolicy: Always
