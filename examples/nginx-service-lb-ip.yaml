@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service-lb
+  labels:
+    app: nginx
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.121.250 # Has to be IP in Ingress IP pool.
+  ports:
+    # the port that this service should serve on
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: tcp
+  selector:
+      app: nginx 	
+#    tier: frontend
+
