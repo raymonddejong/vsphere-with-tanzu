@@ -1,0 +1,34 @@
+apiVersion: run.tanzu.vmware.com/v1alpha1    
+kind: TanzuKubernetesCluster                 
+metadata:
+  name: tkg-cluster-dev                              
+  namespace: marketing
+  labels:
+    name: tkg-cluster-dev
+    environment: development                     
+spec:
+  distribution:
+    version: v1.20.2                        #image name is specified 
+  topology:
+    controlPlane:
+      count: 1                              #1 control plane nodes                       
+      class: best-effort-xsmall             #Extra Small size VM
+      storageClass: pacificstorage-policy   #Specific storage class for control plane   
+      metadata:
+        labels:
+          environment: development    
+    workers:
+      count: 2                              #2 worker nodes                     
+      class: best-effort-xsmall             #Extra small size VM          
+      storageClass: pacificstorage-policy   #Specific storage class for workers     
+  settings:
+    network:
+      cni:
+        name: antrea                        #Default CNI is Antrea
+      services:
+        cidrBlocks: ["198.51.100.0/12"]     #Cannot overlap with Supervisor Cluster
+      pods:
+        cidrBlocks: ["192.0.0.0/16"]        #Cannot overlap with Supervisor Cluster
+    storage:
+      classes: ["pacificstorage-policy"]    #Named PVC storage classes
+      defaultClass: pacificstorage-policy   #Default PVC storage class

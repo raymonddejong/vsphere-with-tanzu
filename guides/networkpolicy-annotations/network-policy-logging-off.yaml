@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nginx-network-policy
+  annotations:
+    ncp/log_traffic: "OFF"
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - ipBlock: 
+        cidr: 192.168.10.0/24
+    ports: 
+    - protocol: TCP
+      port: 80
+  egress:
+  - ports:
+    - protocol: TCP
+      port: 8443
